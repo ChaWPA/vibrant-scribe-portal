@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - Content Manager</title>
+    <meta name="description" content="Manage your events" />
+    <meta name="author" content="Lovable" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="index.html" class="nav-logo">Content Manager</a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Dashboard</a>
+          <a href="events.html" class="nav-link active">Events</a>
+          <a href="news.html" class="nav-link">News</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container section">
+      <div class="header">
+        <h1 class="section-title">Events</h1>
+        <a href="create-event.html" class="btn btn-primary">Add New Event</a>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="searchEvents" class="form-control" placeholder="Search events...">
+        <button id="searchButton" class="btn btn-secondary">Search</button>
+      </div>
+
+      <div id="events"></div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/src/js/main.js"></script>
+    <script>
+      $(document).ready(function() {
+        displayContent('events');
+        
+        $('#searchButton').on('click', function() {
+          const searchTerm = $('#searchEvents').val().toLowerCase();
+          filterContent('events', searchTerm);
+        });
+        
+        $('#searchEvents').on('keyup', function(e) {
+          if (e.keyCode === 13) {
+            const searchTerm = $(this).val().toLowerCase();
+            filterContent('events', searchTerm);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

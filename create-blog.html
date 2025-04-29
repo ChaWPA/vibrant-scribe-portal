@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Blog Post - Content Manager</title>
+    <meta name="description" content="Create a new blog post" />
+    <meta name="author" content="Lovable" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="index.html" class="nav-logo">Content Manager</a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Dashboard</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="news.html" class="nav-link">News</a>
+          <a href="blog.html" class="nav-link active">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container section">
+      <div class="header">
+        <h1 class="section-title">Create Blog Post</h1>
+      </div>
+
+      <div class="card">
+        <form id="blogForm">
+          <input type="hidden" id="blogId" value="">
+          
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" placeholder="Enter blog title" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" id="author" class="form-control" placeholder="Enter author name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" id="category" class="form-control" placeholder="Enter blog category" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="content" class="form-label">Content</label>
+            <textarea id="content" class="form-control" placeholder="Enter blog content" required></textarea>
+          </div>
+          
+          <div class="item-actions">
+            <a href="blog.html" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save Blog Post</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/src/js/main.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Check if we're editing an existing blog post
+        const urlParams = new URLSearchParams(window.location.search);
+        const blogId = urlParams.get('id');
+        
+        if (blogId) {
+          // Change title to indicate editing
+          $('.section-title').text('Edit Blog Post');
+          
+          // Load blog post data
+          loadItemForEditing('blog', blogId);
+        }
+        
+        $('#blogForm').on('submit', function(e) {
+          e.preventDefault();
+          
+          const blogPost = {
+            id: $('#blogId').val() || generateId(),
+            title: $('#title').val(),
+            author: $('#author').val(),
+            category: $('#category').val(),
+            content: $('#content').val(),
+            type: 'blog',
+            createdAt: $('#blogId').val() ? getCreatedAt('blog', $('#blogId').val()) : new Date().toISOString()
+          };
+          
+          saveContent(blogPost);
+          window.location.href = 'blog.html';
+        });
+      });
+    </script>
+  </body>
+</html>

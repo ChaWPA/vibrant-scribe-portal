@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Event - Content Manager</title>
+    <meta name="description" content="Create a new event" />
+    <meta name="author" content="Lovable" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="index.html" class="nav-logo">Content Manager</a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Dashboard</a>
+          <a href="events.html" class="nav-link active">Events</a>
+          <a href="news.html" class="nav-link">News</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container section">
+      <div class="header">
+        <h1 class="section-title">Create Event</h1>
+      </div>
+
+      <div class="card">
+        <form id="eventForm">
+          <input type="hidden" id="eventId" value="">
+          
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" placeholder="Enter event title" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" id="date" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" id="location" class="form-control" placeholder="Enter event location" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" class="form-control" placeholder="Enter event description" required></textarea>
+          </div>
+          
+          <div class="item-actions">
+            <a href="events.html" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save Event</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/src/js/main.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Check if we're editing an existing event
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        
+        if (eventId) {
+          // Change title to indicate editing
+          $('.section-title').text('Edit Event');
+          
+          // Load event data
+          loadItemForEditing('events', eventId);
+        }
+        
+        $('#eventForm').on('submit', function(e) {
+          e.preventDefault();
+          
+          const event = {
+            id: $('#eventId').val() || generateId(),
+            title: $('#title').val(),
+            date: $('#date').val(),
+            location: $('#location').val(),
+            description: $('#description').val(),
+            type: 'events',
+            createdAt: $('#eventId').val() ? getCreatedAt('events', $('#eventId').val()) : new Date().toISOString()
+          };
+          
+          saveContent(event);
+          window.location.href = 'events.html';
+        });
+      });
+    </script>
+  </body>
+</html>

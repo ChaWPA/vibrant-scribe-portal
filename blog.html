@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Content Manager</title>
+    <meta name="description" content="Manage your blog posts" />
+    <meta name="author" content="Lovable" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="index.html" class="nav-logo">Content Manager</a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Dashboard</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="news.html" class="nav-link">News</a>
+          <a href="blog.html" class="nav-link active">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container section">
+      <div class="header">
+        <h1 class="section-title">Blog</h1>
+        <a href="create-blog.html" class="btn btn-primary">Add New Blog Post</a>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="searchBlog" class="form-control" placeholder="Search blog posts...">
+        <button id="searchButton" class="btn btn-secondary">Search</button>
+      </div>
+
+      <div id="blog"></div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/src/js/main.js"></script>
+    <script>
+      $(document).ready(function() {
+        displayContent('blog');
+        
+        $('#searchButton').on('click', function() {
+          const searchTerm = $('#searchBlog').val().toLowerCase();
+          filterContent('blog', searchTerm);
+        });
+        
+        $('#searchBlog').on('keyup', function(e) {
+          if (e.keyCode === 13) {
+            const searchTerm = $(this).val().toLowerCase();
+            filterContent('blog', searchTerm);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
